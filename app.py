@@ -60,10 +60,9 @@ async def read_item(request: Request, id: str):
     user_id = id
     return templates.TemplateResponse(request=request, name="hello.html", context={"user_id": user_id})
 
-@app.get('/weuh')
-async def weuh():
-
-    return 
+@app.get('/weuh/{name}')
+async def weuh(request: Request, name: str):
+    return templates.TemplateResponse("index.html", {"request": request, "name":name})
 
 if __name__ == "__main__":
     uvicorn.run("app:app", host="127.0.0.1", port=5000, reload=True)
