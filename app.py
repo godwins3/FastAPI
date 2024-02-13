@@ -4,8 +4,12 @@ from fastapi.templating import Jinja2Templates
 import uvicorn
 from pydantic import BaseModel
 from typing import List
+from fastapi.staticfiles import StaticFiles
+
 
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates=Jinja2Templates(directory="templates")
 
@@ -55,6 +59,11 @@ async def hello(request: Request):
 async def read_item(request: Request, id: str):
     user_id = id
     return templates.TemplateResponse(request=request, name="hello.html", context={"user_id": user_id})
+
+@app.get('/weuh')
+async def weuh():
+
+    return 
 
 if __name__ == "__main__":
     uvicorn.run("app:app", host="127.0.0.1", port=5000, reload=True)
